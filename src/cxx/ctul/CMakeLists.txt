@@ -53,6 +53,7 @@ set ( CTUL_HEADERS
 	"cfg/collections.hpp"
 	"cfg/memory.hpp"
 	"cfg/mutex.hpp"
+	"cfg/thread.hpp"
 	# UTILS
 	"core/utils/IMutex.hxx"
 	"core/utils/SMutex.hpp"

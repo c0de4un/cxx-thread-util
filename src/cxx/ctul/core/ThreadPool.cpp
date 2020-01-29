@@ -20,21 +20,21 @@
 #endif // !CTUL_CORE_THREAD_POOL_HPP
 
 // PLATFORM
-#if defined( WIN32 ) || defined( WIN64 )
+//#if defined( WIN32 ) || defined( WIN64 )
 
 // Include ctul::windows::WinThread
-#ifndef CTUL_WIN_THREAD_HPP
-#include "../windows/WinThread.hpp"
-#endif // !CTUL_WIN_THREAD_HPP
-using ctul_Thread_t = ctul::win::WinThread;
-#elif defined( LINUX ) || defined( Linux ) || defined( _linux ) || defined( __linux__ ) || defined( __linux )
+//#ifndef CTUL_WIN_THREAD_HPP
+//#include "../windows/WinThread.hpp"
+//#endif // !CTUL_WIN_THREAD_HPP
+//using ctul_Thread_t = ctul::win::WinThread;
+//#elif defined( LINUX ) || defined( Linux ) || defined( _linux ) || defined( __linux__ ) || defined( __linux )
 
 // Include ctul::posix::PThread
 #ifndef CTUL_POSIX_THREAD_HPP
 #include "../posix/PThread.hpp"
 #endif // !CTUL_POSIX_THREAD_HPP
 using ctul_Thread_t = ctul::posix::PThread;
-#endif
+//#endif
 // PLATFORM
 
 // ===========================================================

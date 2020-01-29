@@ -22,6 +22,11 @@
 #include "../core/ThreadBase.hpp"
 #endif // !CTUL_CORE_THREAD_BASE_HPP
 
+// Include ctul::thread
+#ifndef CTUL_CFG_THREAD_HPP
+#include "../cfg/thread.hpp"
+#endif // !CTUL_CFG_THREAD_HPP
+
 // ===========================================================
 // TYPES
 // ===========================================================
@@ -40,7 +45,7 @@ namespace ctul
          * @version 1.0
          * @authors Denis Z. (code4un@yandex.ru)
         **/
-        class PThread final : public ctul_ThreadBase
+        class PThread : public ctul_ThreadBase
         {
 
         private:
@@ -51,6 +56,9 @@ namespace ctul
             // FIELDS
             // ===========================================================
 
+            /** POSIX Thread. **/
+            ctul_thread_t* mThread;
+
             // ===========================================================
             // DELETED
             // ===========================================================
@@ -59,6 +67,25 @@ namespace ctul
             PThread& operator=(const PThread&) = delete;
             PThread(PThread&&) = delete;
             PThread& operator=(PThread&&) = delete;
+
+            // -----------------------------------------------------------
+
+        protected:
+
+            // -----------------------------------------------------------
+
+            // ===========================================================
+            // METHODS
+            // ===========================================================
+
+            /**
+             * @brief
+             * Runs thread logic.
+             *
+             * @thread_safety - only current thread have access.
+             * @throws - can throw exception.
+            **/
+            virtual void OnRun();
 
             // -----------------------------------------------------------
 
@@ -123,6 +150,23 @@ namespace ctul
              * @throws - can throw exception.
             **/
             virtual void Stop(const bool pWait) final;
+
+            // ===========================================================
+            // METHODS
+            // ===========================================================
+
+            /**
+             * @brief
+             * Static method used to run thread logic.
+             * 
+             * @thread_safety - unique call for each thread.
+             * @param pThread - thread to run.
+             * @throws - can throw exception:
+             *  - mutex;
+             *  - access-violation.
+             * All exceptions (errors) reported using IThreadEvent (Events/Messages).
+            **/
+            static void ExecuteRun(PThread* const pThread);
 
             // -----------------------------------------------------------
 

@@ -147,6 +147,7 @@ namespace ctul
 
 } /// ctul
 using ctul_IThread = ctul::core::IThread;
+using ctul_ThreadState = ctul::core::EThreadState;
 #define CTUL_CORE_I_THREAD_DECL
 
 // -----------------------------------------------------------
