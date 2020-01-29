@@ -27,7 +27,7 @@ set ( PROJECT_NAME "cxx-threads-utils-lib" )
 set ( PROJECT_VERSION 1.0.0 )
 
 # Configure Project
-project ( ${PROJECT_NAME} VERSION ${PROJECT_VERSION} DESCRIPTION "Console-helper utility lib demo." LANGUAGES C CXX )
+project ( ${PROJECT_NAME} VERSION ${PROJECT_VERSION} DESCRIPTION "CXX Threading Utility Library Project" LANGUAGES C CXX )
 
 # C Version
 #set ( CMAKE_C_STANDARD 99 )
@@ -59,5 +59,7 @@ include ( "${PROJECT_CMAKE_INCLUDES_DIR}/options.cmake" )
 # =================================================================================
 
 # Library
+add_subdirectory ( "src/cxx/ctul" )
 
 # Demo
+add_subdirectory ( "src/cxx/demo" )
