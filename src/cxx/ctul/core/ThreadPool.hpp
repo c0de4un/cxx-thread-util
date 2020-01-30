@@ -32,6 +32,11 @@
 #include "../cfg/memory.hpp"
 #endif // !CTUL_CFG_MEMORY_HPP
 
+// Include ctul::mutex
+#ifndef CTUL_CFG_MUTEX_HPP
+#include "../cfg/mutex.hpp"
+#endif // !CTUL_CFG_MUTEX_HPP
+
 // ===========================================================
 // FORWARD-DECLARATIONS
 // ===========================================================
@@ -52,6 +57,23 @@ namespace ctul
 }
 using ctul_IThread = ctul::core::IThread;
 #endif // !CTUL_CORE_I_THREAD_DECL
+
+// Forward-Declare ctul::core::IThreadGroup
+#ifndef CTUL_CORE_I_THREAD_GROUP_DECL
+#define CTUL_CORE_I_THREAD_GROUP_DECL
+namespace ctul
+{
+
+    namespace core
+    {
+
+        class IThreadGroup;
+
+    }
+
+}
+using ctul_IThreadGroup = ctul::core::IThreadGroup;
+#endif // !CTUL_CORE_I_THREAD_GROUP_DECL
 
 // ===========================================================
 // TYPES
@@ -82,22 +104,96 @@ namespace ctul
             // CONFIGS
             // ===========================================================
 
-            
+            using tgroup_t = ctul_IThreadGroup;
+            using tgroup_sptr_t = sptr_t<tgroup_t>;
+            using thread_sptr_t = sptr_t<ctul_IThread>;
+            using tgroups_map_t = map_t<thread_id_t, tgroup_sptr_t>;
 
             // ===========================================================
             // FIELDS
             // ===========================================================
 
-            /** Threads. **/
-            map_t<thread_id_t, vec_t<sptr_t<IThread>>> mThreads;
+            /** ThreadPool instance. **/
+            static ThreadPool* mInstance;
+
+            /** ThreadPool mutex. **/
+            static ctul_mutex_t mPoolMutex;
+
+            /** Thread groups. **/
+            tgroups_map_t mTGroups;
+
+            /** Threads map mutex. **/
+            ctul_mutex_t mThreadsMutex;
 
             // ===========================================================
             // CONSTRUCTOR
             // ===========================================================
 
+            /**
+             * @brief
+             * ThreadPool constructor.
+             * 
+             * @throws - can throw out-of-memory.
+            **/
+            explicit ThreadPool();
+
             // ===========================================================
             // DELETED
             // ===========================================================
+
+            ThreadPool(const ThreadPool&) = delete;
+            ThreadPool& operator=(const ThreadPool&) = delete;
+            ThreadPool(ThreadPool&&) = delete;
+            ThreadPool& operator=(ThreadPool&&) = delete;
+
+            // ===========================================================
+            // GETTERS & SETTERS
+            // ===========================================================
+
+            /**
+             * @brief
+             * Searches for the IThread by id.
+             *
+             * @thread_safety - lock used.
+             * @param threadID - thread id.
+             * @returns - IThread, or null.
+             * @throws - can throw exception.
+            **/
+            thread_sptr_t OnGetThread(const thread_id_t threadID);
+
+            /**
+             * @brief
+             * Check if pool is empty.
+             * 
+             * @thread_safety - not thread-safe.
+             * @throws - no exceptions.
+            **/
+            bool IsEmpty();
+
+            // ===========================================================
+            // METHODS
+            // ===========================================================
+
+            /**
+             * @brief
+             * Add new IThread.
+             *
+             * @thread_safety - lock used.
+             * @param pThread - IThread.
+             * @returns - IThread, or null if failed.
+             * @throws - can throw exception.
+            **/
+            void OnAdd(thread_sptr_t& pThread);
+
+            /**
+             * @brief
+             * Removes thread.
+             *
+             * @thread_safety - lock used.
+             * @param threadID - thread id.
+             * @throws - can throw exception.
+            **/
+            void OnRemove(const thread_id_t threadID);
 
             // -----------------------------------------------------------
 
@@ -109,13 +205,52 @@ namespace ctul
             // DESTRUCTOR
             // ===========================================================
 
+            /**
+             * @brief
+             * ThreadPool destructor.
+             * 
+             * @throws - can throw exception.
+            **/
+            ~ThreadPool();
+
             // ===========================================================
             // GETTERS & SETTERS
             // ===========================================================
 
+            /**
+             * @brief
+             * Searches for the IThread by id.
+             * 
+             * @thread_safety - lock used.
+             * @param threadID - thread id.
+             * @returns - IThread, or null.
+             * @throws - can throw exception.
+            **/
+            static thread_sptr_t GetThread(const thread_id_t threadID);
+
             // ===========================================================
             // METHODS
             // ===========================================================
+
+            /**
+             * @brief
+             * Add new IThread.
+             * 
+             * @thread_safety - lock used.
+             * @param pThread - IThread.
+             * @throws - can throw exception.
+            **/
+            static void Add(thread_sptr_t& pThread);
+
+            /**
+             * @brief
+             * Removes thread.
+             *
+             * @thread_safety - lock used.
+             * @param threadID - thread id.
+             * @throws - can throw exception.
+            **/
+            static void Remove(const thread_id_t threadID);
 
             // -----------------------------------------------------------
 

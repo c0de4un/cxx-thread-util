@@ -31,6 +31,14 @@
 template <typename T>
 using sptr_t = std::shared_ptr<T>;
 
+// ===========================================================
+// METHODS
+// ===========================================================
+
+template <typename T, typename... _Types>
+static sptr_t<T> ctul_MakeShared(_Types&& ... _Args)
+{ return std::make_shared<T>(std::forward<_Types>(_Args)...); }
+
 // -----------------------------------------------------------
 
 #endif // !CTUL_CFG_MEMORY_HPP

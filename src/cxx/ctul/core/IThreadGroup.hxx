@@ -132,6 +132,16 @@ namespace ctul
             **/
             virtual thread_ptr_t GetThread(const thread_id_t threadID) = 0;
 
+            /**
+             * @brief
+             * Checks if this thread-group is empty.
+             *
+             * @thread_safety - locks used.
+             * @returns - 'true' if no threads are stored.
+             * @throws - no exception:
+            **/
+            virtual bool IsEmpty() const = 0;
+
             // ===========================================================
             // METHODS
             // ===========================================================
@@ -174,7 +184,7 @@ namespace ctul
              *  - mutex;
              *  - access-violation;
             **/
-            virtual thread_ptr_t Remove(const thread_id_t threadID) = 0;
+            virtual void Remove(const thread_id_t threadID) = 0;
 
             // -----------------------------------------------------------
 

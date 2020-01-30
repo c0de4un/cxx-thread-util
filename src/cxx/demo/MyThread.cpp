@@ -15,56 +15,25 @@
 // ===========================================================
 
 // HEADER
-#ifndef CTUL_CORE_THREAD_BASE_HPP
-#include "ThreadBase.hpp"
-#endif // !CTUL_CORE_THREAD_BASE_HPP
+#ifndef CTUL_DEMO_MY_THREAD_HPP
+#include "MyThread.hpp"
+#endif // !CTUL_DEMO_MY_THREAD_HPP
 
 // ===========================================================
-// ThreadBase
+// ctul::demo::MyThread
 // ===========================================================
 
 namespace ctul
 {
 
-    namespace core
+    namespace demo
     {
 
         // -----------------------------------------------------------
 
-        // ===========================================================
-        // CONSTRUCTOR & DESTRUCTOR
-        // ===========================================================
-
-        ThreadBase::ThreadBase(const thread_id_t pID)
-            : mID( pID ),
-            mState( EThreadState::STOPPED ),
-            mEventsListener(nullptr)
-        {
-        }
-
-        ThreadBase::~ThreadBase()
-        {
-        }
-
-        // ===========================================================
-        // GETTERS & SETTERS
-        // ===========================================================
-
-        thread_id_t ThreadBase::GetID() const
-        { return mID; }
-
-        byte_t ThreadBase::GetState() const
-        {
-            const byte_t state_ = mState;
-            return state_;
-        }
-
-        void ThreadBase::SetListener(ctul_IThreadListener* const pListener)
-        { mEventsListener = pListener; }
-
         // -----------------------------------------------------------
 
-    } /// ctul::core
+    } /// ctul::demo
 
 } /// ctul
 

@@ -73,7 +73,7 @@ namespace ctul
             // ===========================================================
 
             /** Threads collection access mutex. **/
-            ctul_mutex_t mThreadsMutex;
+            mutable ctul_mutex_t mThreadsMutex;
 
             /** Threads. **/
             threads_list_t mThreads;
@@ -148,6 +148,16 @@ namespace ctul
             **/
             virtual thread_ptr_t GetThread(const thread_id_t threadID) final;
 
+            /**
+             * @brief
+             * Checks if this thread-group is empty.
+             *
+             * @thread_safety - locks used.
+             * @returns - 'true' if no threads are stored.
+             * @throws - no exception:
+            **/
+            virtual bool IsEmpty() const final;
+
             // ===========================================================
             // IThreadGroup
             // ===========================================================
@@ -190,7 +200,7 @@ namespace ctul
              *  - mutex;
              *  - access-violation;
             **/
-            virtual thread_ptr_t Remove(const thread_id_t threadID) final;
+            virtual void Remove(const thread_id_t threadID) final;
 
             // -----------------------------------------------------------
 

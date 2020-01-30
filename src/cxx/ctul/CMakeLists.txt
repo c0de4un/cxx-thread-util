@@ -58,6 +58,7 @@ set ( CTUL_HEADERS
 	"core/utils/IMutex.hxx"
 	"core/utils/SMutex.hpp"
 	# CORE
+	"core/IThreadListener.hxx"
 	"core/ThreadBase.hpp"
 	"core/events/IThreadEvent.hxx"
 	"core/events/ThreadErrorEvent.hpp"
@@ -90,7 +91,7 @@ if ( LINUX OR APPLE )
 	include ( "posix/posix.cmake" )
 elseif ( WIN32 OR WIN64 OR MINGW )
 	include ( "windows/windows.cmake" )
-endif ( LINUX )
+endif ( LINUX OR APPLE )
 
 # =================================================================================
 # BUILD

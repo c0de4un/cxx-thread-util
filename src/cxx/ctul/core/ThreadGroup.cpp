@@ -99,7 +99,7 @@ namespace ctul
                 mThreads.erase(std::find(mThreads.begin(), mThreads.end(), pTHread));
         }
 
-        ThreadGroup::thread_ptr_t ThreadGroup::Remove(const thread_id_t threadID)
+        void ThreadGroup::Remove(const thread_id_t threadID)
         {
             ctul_ulock ulock_(mThreadsMutex);
             const std::size_t threadsNum = mThreads.size();
@@ -120,13 +120,16 @@ namespace ctul
                     }
                     else
                         mThreads.erase(pos_);
-                    return result_;
                 }
 
                 pos_++;
             }
+        }
 
-            return thread_ptr_t(nullptr);
+        bool ThreadGroup::IsEmpty() const
+        {
+            ctul_ulock ulock_(mThreadsMutex);
+            return mThreads.size() > 0;
         }
 
         // -----------------------------------------------------------

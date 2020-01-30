@@ -49,7 +49,7 @@ namespace ctul
          * @version 1.0
          * @authors Denis Z. (code4un@yandex.ru)
         **/
-        class SMutex final : public ctul_IMutex
+        class SMutex : public ctul_IMutex
         {
 
         private:

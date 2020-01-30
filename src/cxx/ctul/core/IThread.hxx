@@ -23,6 +23,27 @@
 #endif // !CTUL_CFG_TYPES_HPP
 
 // ===========================================================
+// FORWARD-DECLARATIONS
+// ===========================================================
+
+// Forward-Declare ctul::core::IThreadListener
+#ifndef CTUL_CORE_I_THREAD_LISTENER_DECL
+#define CTUL_CORE_I_THREAD_LISTENER_DECL
+namespace ctul
+{
+
+    namespace core
+    {
+
+        class IThreadListener;
+
+    }
+
+}
+using ctul_IThreadListener = ctul::core::IThreadListener;
+#endif // !CTUL_CORE_I_THREAD_LISTENER_DECL
+
+// ===========================================================
 // TYPES
 // ===========================================================
 
@@ -102,6 +123,16 @@ namespace ctul
              * @throws - can throw exception.
             **/
             virtual byte_t GetState() const = 0;
+
+            /**
+             * @brief
+             * Set/remove IThread events listener/handler.
+             * 
+             * @thread_safety - must be called before starting this thread.
+             * @param pLsitener - IThreadListener implementation.
+             * @throws - no exceptions.
+            **/
+            virtual void SetListener(ctul_IThreadListener* const pListener) = 0;
 
             // ===========================================================
             // METHODS

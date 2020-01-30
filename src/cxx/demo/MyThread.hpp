@@ -8,8 +8,8 @@
  * SOFTWARE.
 **/
 
-#ifndef CTUL_CFG_MUTEX_HPP
-#define CTUL_CFG_MUTEX_HPP
+#ifndef CTUL_DEMO_MY_THREAD_HPP
+#define CTUL_DEMO_MY_THREAD_HPP
 
 // -----------------------------------------------------------
 
@@ -17,41 +17,24 @@
 // INCLUDES
 // ===========================================================
 
-// Include C++ mutex
-#include <mutex>
-
-// Include ctul::core::SMutex
-#ifndef CTUL_CORE_SMUTEX_HPP
-#include "../core/utils/SMutex.hpp"
-#endif // !CTUL_CORE_SMUTEX_HPP
-
-// ===========================================================
-// FORWARD-DECLARATIONS
-// ===========================================================
-
-// Forward-Declaration of ctul::core::SMutex (required by compiler to prevent type-error).
-#ifndef CTUL_CORE_SMUTEX_DECL
-#define CTUL_CORE_SMUTEX_DECL
-namespace ctul
-{
-
-    namespace core
-    {
-
-        class SMutex;
-
-    }
-
-}
-#endif // !CTUL_CORE_SMUTEX_DECL
-
 // ===========================================================
 // TYPES
 // ===========================================================
 
-using ctul_mutex_t = ctul::core::SMutex;// std::mutex;
-using ctul_ulock = std::unique_lock<ctul_mutex_t>;
+namespace ctul
+{
+
+    namespace demo
+    {
+
+        // -----------------------------------------------------------
+
+        // -----------------------------------------------------------
+
+    } /// ctul::demo
+
+} /// ctul
 
 // -----------------------------------------------------------
 
-#endif // !CTUL_CFG_MUTEX_HPP
+#endif // !CTUL_DEMO_MY_THREAD_HPP

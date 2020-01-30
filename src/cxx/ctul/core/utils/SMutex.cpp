@@ -74,7 +74,8 @@ namespace ctul
         {
             if (mLocked)
             {
-                mMutex.unlock();
+                if (mMutex.try_lock())
+                    mMutex.unlock();
             }
         }
 

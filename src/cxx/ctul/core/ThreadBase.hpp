@@ -82,6 +82,9 @@ namespace ctul
             /** Current State. **/
             ctul_atomic<byte_t> mState;
 
+            /** IThreadListener. **/
+            ctul_IThreadListener* mEventsListener;
+
             // ===========================================================
             // CONSTRUCTOR
             // ===========================================================
@@ -138,6 +141,16 @@ namespace ctul
              * @throws - can throw exception.
             **/
             virtual byte_t GetState() const final;
+
+            /**
+             * @brief
+             * Set/remove IThread events listener/handler.
+             *
+             * @thread_safety - must be called before starting this thread.
+             * @param pLsitener - IThreadListener implementation.
+             * @throws - no exceptions.
+            **/
+            virtual void SetListener(ctul_IThreadListener* const pListener) final;
 
             // -----------------------------------------------------------
 

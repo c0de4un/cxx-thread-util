@@ -22,6 +22,11 @@
 #include "../core/ThreadBase.hpp"
 #endif // !CTUL_CORE_THREAD_BASE_HPP
 
+// Include ctul::thread
+#ifndef CTUL_CFG_THREAD_HPP
+#include "../cfg/thread.hpp"
+#endif // !CTUL_CFG_THREAD_HPP
+
 // ===========================================================
 // TYPES
 // ===========================================================
@@ -35,12 +40,12 @@ namespace ctul
         // -----------------------------------------------------------
 
         /**
-         * WinThread - decorator-class for Windows-based thread-api.
+         * WinThread - decorator-class for POSIX-based thread-api.
          *
          * @version 1.0
          * @authors Denis Z. (code4un@yandex.ru)
         **/
-        class WinThread final : public ctul_ThreadBase
+        class WinThread : public ctul_ThreadBase
         {
 
         private:
@@ -51,6 +56,9 @@ namespace ctul
             // FIELDS
             // ===========================================================
 
+            /** POSIX Thread. **/
+            ctul_thread_t* mThread;
+
             // ===========================================================
             // DELETED
             // ===========================================================
@@ -59,6 +67,25 @@ namespace ctul
             WinThread& operator=(const WinThread&) = delete;
             WinThread(WinThread&&) = delete;
             WinThread& operator=(WinThread&&) = delete;
+
+            // -----------------------------------------------------------
+
+        protected:
+
+            // -----------------------------------------------------------
+
+            // ===========================================================
+            // METHODS
+            // ===========================================================
+
+            /**
+             * @brief
+             * Runs thread logic.
+             *
+             * @thread_safety - only current thread have access.
+             * @throws - can throw exception.
+            **/
+            virtual void OnRun();
 
             // -----------------------------------------------------------
 
@@ -124,9 +151,26 @@ namespace ctul
             **/
             virtual void Stop(const bool pWait) final;
 
+            // ===========================================================
+            // METHODS
+            // ===========================================================
+
+            /**
+             * @brief
+             * Static method used to run thread logic.
+             *
+             * @thread_safety - unique call for each thread.
+             * @param pThread - thread to run.
+             * @throws - can throw exception:
+             *  - mutex;
+             *  - access-violation.
+             * All exceptions (errors) reported using IThreadEvent (Events/Messages).
+            **/
+            static void ExecuteRun(WinThread* const pThread);
+
             // -----------------------------------------------------------
 
-        }; /// ctul::posix::WinThread
+        }; /// ctul::win::WinThread
 
         // -----------------------------------------------------------
 
